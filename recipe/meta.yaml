@@ -21,6 +21,8 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     - make  # [unix]
+    # used to support legacy mac os versions
+    - macports-legacy-support  # [osx]
 
 test:
   commands:
