@@ -1,0 +1,48 @@
+{% set name = "criterion" %}
+{% set version = "2.3.3" %}
+{% set sha256 = "8c85e1fcdb9a39b82bee50394bedfe74a0c839ffff129ddfc6fb73b11adafa29" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/Snaipe/Criterion/releases/download/v{{ version }}/criterion-v{{ version }}.tar.bz2
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+  run_exports:
+    - {{ pin_subpackage('criterion', max_pin='x') }}
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - cmake
+    - make  # [unix]
+
+test:
+  commands:
+    - test -d ${PREFIX}/include/criterion  # [unix]
+    - test -f ${PREFIX}/include/criterion/criterion.h  # [unix]
+    - test -f ${PREFIX}/share/pkgconfig/criterion.pc  # [unix]
+    - test -f ${PREFIX}/lib/libcriterion.so  # [linux]
+    - test -f ${PREFIX}/lib/libcriterion.dylib  # [osx]
+    - if exist %LIBRARY_PREFIX%\include\criterion\criterion.h (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_PREFIX%\share\pkgconfig\criterion.pc (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_PREFIX%\bin\criterion.dll (exit 0) else (exit 1)  # [win]
+
+about:
+  home: https://github.com/Snaipe/Criterion
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: 'A cross-platform C and C++ unit testing framework for the 21st century'
+  description: |
+    A dead-simple, yet extensible, C and C++ unit testing framework.
+  doc_url: http://criterion.readthedocs.org
+  dev_url: https://github.com/Snaipe/Criterion
+
+extra:
+  recipe-maintainers:
+    - smutch
