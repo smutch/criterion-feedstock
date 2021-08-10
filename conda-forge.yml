@@ -1,1 +1,15 @@
-{}
+provider: 
+  osx: azure
+  linux: azure
+  win: azure
+  linux_aarch64: azure
+  linux_ppc64le: azure
+test_on_native_only: true
+build_with_mamba: True
+
+github:
+  user_or_org: smutch
+channels:
+  targets:
+  -
+    - smutch
